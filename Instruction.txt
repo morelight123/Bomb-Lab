@@ -1,0 +1,29 @@
+The lab should be run under linux enviornment.
+open terminal in linux.
+change to bomb's directory.(use "cd")
+Then "gdb bomb" to use gdb debugger to run your bomb.
+We will first take a look at phase 1 using disass function in gdb.
+The following should shows up:
+
+(gdb) disass phase_1
+Dump of assembler code for function phase_1:
+   0x0000000000400e8d <+0>:	sub    $0x8,%rsp
+   0x0000000000400e91 <+4>:	mov    $0x402590,%esi
+   0x0000000000400e96 <+9>:	callq  0x401376 <strings_not_equal>
+   0x0000000000400e9b <+14>:	test   %eax,%eax
+   0x0000000000400e9d <+16>:	je     0x400ea4 <phase_1+23>
+   0x0000000000400e9f <+18>:	callq  0x4015dd <explode_bomb>
+   0x0000000000400ea4 <+23>:	add    $0x8,%rsp
+   0x0000000000400ea8 <+27>:	retq   
+End of assembler dump.
+
+by reading and understand the machine code we know the bomb explode when your input string is not equal to $0x402590.
+Therefore we turn $0x402590 into string.
+the following is what you should get:
+
+(gdb) x/s 0x402590
+0x402590:	"He is evil and fits easily into most overhead storage bins."
+
+Thus, phase_1 answer is the above string.
+
+to be continued.....
